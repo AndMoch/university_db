@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">UniversityDB</string>
+    <string name="title">Чемпионат мира по футболу</string>
+    <string name="name">Имя</string>
+    <string name="surname">Фамилия</string>
+    <string name="second_name">Отчество</string>
+    <string name="birthdate">Дата рождения (В формате ДД.ММ.ГГГГ)</string>
+    <string name="group_num">Номер группы</string>
+    <string name="group">Группа</string>
+    <string name="faculty">Название факультета</string>
+    <string name="save">Сохранить</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
+    <string name="cancel">Отмена</string>
+    <string name="deleteAll">Удалить все</string>
+    <string name="deleteAllStuds">Удалить всех студентов</string>
+    <string name="deleteAllStudsFromGroup">Удалить всех студентов из группы</string>
+    <string name="exit">Выход</string>
+    <string name="addGroup">Добавить группу</string>
+    <string name="addStudToGroup">Добавить студента в группу</string>
+    <string name="addStud">Добавить студента</string>
+    <string name="deleteAllGroups">Удалить все группы</string>
+</resources>

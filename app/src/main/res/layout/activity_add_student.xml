@@ -1,0 +1,87 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/studAddButtons"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+        <Button
+            android:id="@+id/btnStudAddSave"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/save"
+            />
+
+        <Button
+            android:id="@+id/btnStudAddCancel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_above="@id/studAddButtons"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+                    <TextView
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/name" />
+                    <EditText
+                        android:id="@+id/studName"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/surname" />
+                    <EditText
+                        android:id="@+id/studSurname"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" >
+                    </EditText>
+                    <TextView
+                        android:layout_width="123dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/second_name" />
+                    <EditText
+                        android:id="@+id/studSecondName"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/birthdate" />
+                    <EditText
+                        android:id="@+id/studBirthdate"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/group" />
+                <Spinner
+                    android:id="@+id/studGroup"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
