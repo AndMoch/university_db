@@ -9,6 +9,9 @@ public class MatchesStud implements Serializable {
     private String second_name;
     private String birthdate;
     private int group_id;
+    public MatchesStud(){
+
+    }
 
     public MatchesStud (long id, String name, String surname, String second_name, String birthdate, int group_id) {
         this.id = id;
