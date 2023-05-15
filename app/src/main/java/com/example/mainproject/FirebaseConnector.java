@@ -10,7 +10,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 public class FirebaseConnector{
+    final String TAG = "Firebase";
     FirebaseDatabase db;
     DatabaseReference ref;
     DatabaseReference studentsEndpoint;
@@ -20,26 +24,52 @@ public class FirebaseConnector{
         ref = db.getReference("university");
         studentsEndpoint = ref.child("students");
         groupsEndpoint = ref.child("groups");
-        ref.addValueEventListener(new ValueEventListener() {
+        ValueEventListener studentListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String value = snapshot.getValue(String.class);
-                Log.d("ValueEventListenerSuccess", "Value is: " + value);
+                MatchesStud student = snapshot.getValue(MatchesStud.class);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("ValueEventListenerError", "Failed to read value.", error.toException());
+                Log.w(TAG, "loadStud:onCancelled", error.toException());
             }
-        });
-    }
-    public void writeNewStud(long id, String name, String surname, String second_name, String birthdate,
-                             int group_id){
-        String studId = Long.toString(id);
-        ref.child("students").child(studId).setValue(new MatchesStud(id, name, surname, second_name, birthdate, group_id));
-    }
-    public void writeNewGroup(long id, int number, String faculty){
-        String groupId = Long.toString(id);
-        ref.child("groups").child(groupId).setValue(new MatchesGroup(id, number, faculty));
-    }
+        };
+        ValueEventListener groupListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                MatchesGroup group = snapshot.getValue(MatchesGroup.class);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "loadGroup:onCancelled", error.toException());
+            }
+        };
+        studentsEndpoint.addValueEventListener(studentListener);
+        groupsEndpoint.addValueEventListener(groupListener);
+    }
+    public void writeNewStud(String id, String name, String surname, String second_name, String birthdate,
+                             String group_id){
+        ref.child("students").child(id).setValue(new MatchesStud(id, name, surname, second_name, birthdate, group_id));
+    }
+    public void writeNewGroup(String id, int number, String faculty){
+        ref.child("groups").child(id).setValue(new MatchesGroup(id, number, faculty));
+    }
+    public void updateStud(String id, String name, String surname, String second_name, String birthdate,
+                           String group_id){
+        HashMap<String, Object> update = new HashMap<>();
+        update.put(id + "/name", name);
+        update.put(id + "/surname", surname);
+        update.put(id + "/second_name", second_name);
+        update.put(id + "/birthdate", birthdate);
+        update.put(id + "/group_id", group_id);
+        ref.child("students").updateChildren(update);
+    }
+    public void updateGroup(String id, int number, String faculty){
+        HashMap<String, Object> update = new HashMap<>();
+        update.put(id + "/number", number);
+        update.put(id + "/faculty", faculty);
+        ref.child("groups").updateChildren(update);
+    }
 }

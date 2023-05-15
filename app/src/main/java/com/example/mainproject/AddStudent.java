@@ -20,7 +20,7 @@ public class AddStudent extends AppCompatActivity {
     Context mContext;
     DBMatches DBConnector;
     Spinner group;
-    private long MatchStudID;
+    private UUID MatchStudID;
     ArrayList<MatchesGroup> groups = new ArrayList<>();
 
     @Override
@@ -52,7 +52,6 @@ public class AddStudent extends AppCompatActivity {
             secondName.setText(matches.getSecond_name());
             birthdate.setText(matches.getBirthdate());
             MatchStudID = matches.getId();
-            group.setSelection(matches.getGroup_id());
         }
         else
         {

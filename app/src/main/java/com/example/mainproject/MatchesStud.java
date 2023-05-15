@@ -1,19 +1,20 @@
 package com.example.mainproject;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class MatchesStud implements Serializable {
-    private long id;
+    private String id;
     private String name;
     private String surname;
     private String second_name;
     private String birthdate;
-    private int group_id;
+    private String group_id;
     public MatchesStud(){
 
     }
 
-    public MatchesStud (long id, String name, String surname, String second_name, String birthdate, int group_id) {
+    public MatchesStud (String id, String name, String surname, String second_name, String birthdate, String group_id) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -22,7 +23,7 @@ public class MatchesStud implements Serializable {
         this.group_id = group_id;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
@@ -42,7 +43,7 @@ public class MatchesStud implements Serializable {
         return birthdate;
     }
 
-    public int getGroup_id() {
+    public String getGroup_id() {
         return group_id;
     }
 }
