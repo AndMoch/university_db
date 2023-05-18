@@ -10,12 +10,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.UUID;
+
 public class AddGroup extends AppCompatActivity {
     Button btnAddGroup, btnCancelAddingGroup;
     EditText groupFaculty, groupNumber;
-    private Context context;
-    private long MatchGroupID;
 
+    private Context context;
+    private String MatchGroupID;
+
+    FirebaseConnector dbConnect;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,15 +28,18 @@ public class AddGroup extends AppCompatActivity {
         btnCancelAddingGroup = findViewById(R.id.btnGroupAddCancel);
         groupFaculty = findViewById(R.id.groupFaculty);
         groupNumber = findViewById(R.id.groupNumber);
+        dbConnect = new FirebaseConnector();
         if(getIntent().hasExtra("Matches")){
             MatchesGroup matches=(MatchesGroup)getIntent().getSerializableExtra("Matches");
             groupNumber.setText(matches.getNumber());
             groupFaculty.setText(matches.getFaculty());
-            MatchGroupID=matches.getId();
+            MatchGroupID = matches.getId();
         }
         else
         {
-            MatchGroupID=-1;
+            MatchGroupID = UUID.randomUUID().toString();
+            while (dbConnect.getGroup(MatchGroupID) != null)
+                MatchGroupID = UUID.randomUUID().toString();
         }
         btnAddGroup.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -51,10 +52,10 @@ public class FirebaseConnector{
     }
     public void writeNewStud(String id, String name, String surname, String second_name, String birthdate,
                              String group_id){
-        ref.child("students").child(id).setValue(new MatchesStud(id, name, surname, second_name, birthdate, group_id));
+        studentsEndpoint.child(id).setValue(new MatchesStud(id, name, surname, second_name, birthdate, group_id));
     }
     public void writeNewGroup(String id, int number, String faculty){
-        ref.child("groups").child(id).setValue(new MatchesGroup(id, number, faculty));
+        groupsEndpoint.child(id).setValue(new MatchesGroup(id, number, faculty));
     }
     public void updateStud(String id, String name, String surname, String second_name, String birthdate,
                            String group_id){
@@ -71,5 +72,23 @@ public class FirebaseConnector{
         update.put(id + "/number", number);
         update.put(id + "/faculty", faculty);
         ref.child("groups").updateChildren(update);
+    }
+    public MatchesGroup getGroup(String id){
+        return groupsEndpoint.child(id).get().getResult().getValue(MatchesGroup.class);
+    }
+    public MatchesGroup getAllGroups(){
+        return groupsEndpoint.get().getResult().getValue(MatchesGroup.class);
+    }
+    public MatchesStud getStud(String id){
+        return studentsEndpoint.child(id).get().getResult().getValue(MatchesStud.class);
+    }
+    public MatchesStud getAllStuds(){
+        return studentsEndpoint.get().getResult().getValue(MatchesStud.class);
+    }
+    public void deleteGroup(String id){
+        groupsEndpoint.child(id).removeValue();
+    }
+    public void deleteStud(MatchesStud stud){
+
     }
 }

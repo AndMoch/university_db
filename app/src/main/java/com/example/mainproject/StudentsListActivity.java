@@ -33,12 +33,15 @@ public class StudentsListActivity extends AppCompatActivity {
     ListView mListView;
     long thisGroupId;
 
+    FirebaseConnector mFirebaseConnector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students_list);
         mContext = this;
         mDBConnector = new DBMatches(this);
+        mFirebaseConnector = new FirebaseConnector();
         mListView =  findViewById(R.id.studList);
         studAdapter = new StudentsListActivity.studListAdapter(mContext, mDBConnector.selectStudsByGroup(thisGroupId));
         mListView.setAdapter(studAdapter);

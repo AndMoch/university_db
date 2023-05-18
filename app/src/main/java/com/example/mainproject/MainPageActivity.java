@@ -28,6 +28,8 @@ public class MainPageActivity extends AppCompatActivity {
     private static final int ADD_GROUP_ACTIVITY = 11;
     private static final int REDACT_GROUP_ACTIVITY = 12;
     DBMatches mDBConnector;
+
+    FirebaseConnector mFirebaseConnector;
     Context mContext;
     ListView mListView;
     Button btnAllStuds, btnSignOut;
@@ -108,13 +110,14 @@ public class MainPageActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.editGroup:
                 Intent i = new Intent(mContext, AddGroup.class);
-                MatchesGroup md = mDBConnector.selectGroup(info.id);
+                MatchesGroup md = (MatchesGroup) mListView.getItemAtPosition((int)info.id);
                 i.putExtra("Matches", md);
                 startActivityForResult(i, REDACT_GROUP_ACTIVITY);
                 updateGroupList();
                 return true;
             case R.id.deleteGroup:
-                mDBConnector.deleteGroup(info.id);
+                MatchesGroup delete = (MatchesGroup) mListView.getItemAtPosition((int)info.id);
+                mFirebaseConnector.deleteGroup(delete.getId());
                 updateGroupList();
                 return true;
             default:
@@ -123,7 +126,7 @@ public class MainPageActivity extends AppCompatActivity {
     }
 
     private void updateGroupList () {
-        groupAdapter.setArrayMyData(mDBConnector.selectAllGroups());
+        groupAdapter.setArrayMyData(mFirebaseConnector.getAllGroups());
         groupAdapter.notifyDataSetChanged();
     }
 
@@ -165,10 +168,11 @@ public class MainPageActivity extends AppCompatActivity {
             return position;
         }
 
+        @Override
         public long getItemId (int position) {
             MatchesGroup md = arrayMyMatches.get(position);
             if (md != null) {
-                return md.getId();
+                return position;
             }
             return 0;
         }
