@@ -256,7 +256,7 @@ public class MainPageActivity extends AppCompatActivity {
                 convertView = mLayoutInflater.inflate(R.layout.item_group, null);
             TextView vInfo = convertView.findViewById(R.id.groupInfo);
             MatchesGroup md = arrayMyMatches.get(position);
-            vInfo.setText(md.getFaculty() + " №" + md.getNumber());
+            vInfo.setText(md.getFaculty() + " факультет, " + "группа №" + md.getNumber());
             return convertView;
         }
     }

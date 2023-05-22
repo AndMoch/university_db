@@ -216,11 +216,11 @@ public class StudentsListActivity extends AppCompatActivity {
             MatchesStud md = arrayMyMatches.get(position);
             MatchesGroup mg = mFirebaseConnector.getGroup(md.getGroup_id());
 
-            vName.setText(md.getName());
-            vSurname.setText(md.getSurname());
+            vName.setText(md.getName() + " ");
+            vSurname.setText(md.getSurname() + " ");
             vSecondName.setText(md.getSecond_name());
-            vBirthdate.setText(md.getBirthdate());
-            vGroup.setText(mg.getFaculty() + " №" + mg.getNumber());
+            vBirthdate.setText(md.getBirthdate() + " ");
+            vGroup.setText(mg.getFaculty() + " факультет, группа " + " №" + mg.getNumber());
 
             return convertView;
         }
