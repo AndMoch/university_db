@@ -12,7 +12,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
 
 public class FirebaseConnector{
     final String TAG = "Firebase";
@@ -20,35 +19,28 @@ public class FirebaseConnector{
     DatabaseReference ref;
     DatabaseReference studentsEndpoint;
     DatabaseReference groupsEndpoint;
+    ArrayList<MatchesStud> students = new ArrayList<>();
+    ArrayList<MatchesGroup> groups = new ArrayList<>();
+    ArrayList<String> groupsIds = new ArrayList<>();
     FirebaseConnector(){
         db = FirebaseDatabase.getInstance("https://university-db-d344b-default-rtdb.europe-west1.firebasedatabase.app");
         ref = db.getReference("university");
         studentsEndpoint = ref.child("students");
         groupsEndpoint = ref.child("groups");
-        ValueEventListener studentListener = new ValueEventListener() {
+        studentsEndpoint.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                MatchesStud student = snapshot.getValue(MatchesStud.class);
+                students.clear();
+                for(DataSnapshot stud: snapshot.getChildren()){
+                    MatchesStud student = stud.getValue(MatchesStud.class);
+                    students.add(student);}
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w(TAG, "loadStud:onCancelled", error.toException());
             }
-        };
-        ValueEventListener groupListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                MatchesGroup group = snapshot.getValue(MatchesGroup.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "loadGroup:onCancelled", error.toException());
-            }
-        };
-        studentsEndpoint.addValueEventListener(studentListener);
-        groupsEndpoint.addValueEventListener(groupListener);
+        });
     }
     public void writeNewStud(String id, String name, String surname, String second_name, String birthdate,
                              String group_id){
@@ -74,21 +66,51 @@ public class FirebaseConnector{
         ref.child("groups").updateChildren(update);
     }
     public MatchesGroup getGroup(String id){
-        return groupsEndpoint.child(id).get().getResult().getValue(MatchesGroup.class);
+        for (MatchesGroup group: groups) {
+            if (group.getId().equals(id)){
+                return group;
+            }
+        }
+        return null;
     }
-    public MatchesGroup getAllGroups(){
-        return groupsEndpoint.get().getResult().getValue(MatchesGroup.class);
+    public ArrayList<MatchesGroup> getAllGroups(){
+        return groups;
     }
     public MatchesStud getStud(String id){
-        return studentsEndpoint.child(id).get().getResult().getValue(MatchesStud.class);
+        for (MatchesStud stud: students) {
+            if (stud.getId().equals(id)){
+                return stud;
+            }
+        }
+        return null;
     }
-    public MatchesStud getAllStuds(){
-        return studentsEndpoint.get().getResult().getValue(MatchesStud.class);
+    public ArrayList<MatchesStud> getAllStuds(){
+        return students;
+    }
+    public ArrayList<MatchesStud> getAllStudsByGroup(String groupId){
+        ArrayList<MatchesStud> studs = new ArrayList<>();
+        for (MatchesStud stud: students){
+            if(stud.getGroup_id().equals(groupId)){
+                studs.add(stud);
+            }
+        }
+        return studs;
     }
     public void deleteGroup(String id){
         groupsEndpoint.child(id).removeValue();
     }
-    public void deleteStud(MatchesStud stud){
-
+    public void deleteAllGroups(){
+        groupsEndpoint.removeValue();
+    }
+    public void deleteStud(String id){
+        studentsEndpoint.child(id).removeValue();
+    }
+    public void deleteAllStuds(){
+        studentsEndpoint.removeValue();
+    }
+    public void deleteAllStudsFromGroup(String groupId){
+        for (MatchesStud stud: students){
+            if(stud.getGroup_id().equals(groupId)){
+            studentsEndpoint.child(stud.getId()).removeValue();}}
     }
 }

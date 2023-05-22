@@ -73,7 +73,7 @@
                         android:id="@+id/studBirthdate"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text" />
+                        android:inputType="text"/>
                 <TextView
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
