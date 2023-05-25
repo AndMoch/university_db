@@ -12,6 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class FirebaseConnector{
     final String TAG = "Firebase";
@@ -19,14 +20,17 @@ public class FirebaseConnector{
     DatabaseReference ref;
     DatabaseReference studentsEndpoint;
     DatabaseReference groupsEndpoint;
+    DatabaseReference universitiesEndpoint;
     ArrayList<MatchesStud> students = new ArrayList<>();
     ArrayList<MatchesGroup> groups = new ArrayList<>();
+    ArrayList<MatchesUniver> universities = new ArrayList<>();
     ArrayList<String> groupsIds = new ArrayList<>();
     FirebaseConnector(){
         db = FirebaseDatabase.getInstance("https://university-db-d344b-default-rtdb.europe-west1.firebasedatabase.app");
         ref = db.getReference("university");
         studentsEndpoint = ref.child("students");
         groupsEndpoint = ref.child("groups");
+        universitiesEndpoint = ref.child("universities");
         studentsEndpoint.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -48,6 +52,12 @@ public class FirebaseConnector{
     }
     public void writeNewGroup(String id, int number, String faculty){
         groupsEndpoint.child(id).setValue(new MatchesGroup(id, number, faculty));
+    }
+    public void writeNewUniversity(String id, String title){
+        universitiesEndpoint.child(id).setValue(new MatchesUniver(id, title));
+    }
+    public void writeNewMark(String studId, String subj, int mark){
+        studentsEndpoint.child(studId).child("marks").updateChildren(new HashMap<>(subj, mark));
     }
     public void updateStud(String id, String name, String surname, String second_name, String birthdate,
                            String group_id){

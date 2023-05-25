@@ -13,6 +13,30 @@
         android:theme="@style/Theme.MainProject"
         tools:targetApi="31">
         <activity
+            android:name=".AddMark"
+            android:exported="false" />
+        <activity
+            android:name=".StudentsMarks"
+            android:exported="false" />
+        <activity
+            android:name=".SendRequestAccount"
+            android:exported="false" />
+        <activity
+            android:name=".SendRequestUniver"
+            android:exported="false" />
+        <activity
+            android:name=".AddUniver"
+            android:exported="false" />
+        <activity
+            android:name=".AccountsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UniversitiesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddStudentToGroup"
             android:exported="false">
             <meta-data

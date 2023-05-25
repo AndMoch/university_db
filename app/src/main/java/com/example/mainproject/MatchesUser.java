@@ -4,28 +4,26 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.UUID;
 
-public class MatchesStud implements Serializable {
+public class MatchesUser implements Serializable {
     private String id;
     private String name;
     private String surname;
     private String second_name;
-    private String birthdate;
-    private String group_id;
+    private String email;
 
-    private String unicersityId;
+    private String universityId;
 
-    private Map<String, int[]> marks;
-    public MatchesStud(){
+    public MatchesUser(){
 
     }
 
-    public MatchesStud (String id, String name, String surname, String second_name, String birthdate, String group_id) {
+    public MatchesUser(String id, String name, String surname, String second_name, String email, String universityId) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.second_name = second_name;
-        this.birthdate = birthdate;
-        this.group_id = group_id;
+        this.email = email;
+        this.universityId = universityId;
     }
 
     public String getId() {
@@ -44,11 +42,11 @@ public class MatchesStud implements Serializable {
         return second_name;
     }
 
-    public String getBirthdate() {
-        return birthdate;
+    public String getEmail() {
+        return email;
     }
 
-    public String getGroup_id() {
-        return group_id;
+    public String getUniversityId() {
+        return universityId;
     }
 }

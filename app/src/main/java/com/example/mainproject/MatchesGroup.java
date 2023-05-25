@@ -7,6 +7,9 @@ public class MatchesGroup implements Serializable {
     private String id;
     private String faculty;
     private int number;
+
+    private String universityId;
+
     public MatchesGroup(){
     }
 
