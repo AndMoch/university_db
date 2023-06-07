@@ -75,7 +75,7 @@ public class FirebaseConnector{
         update.put(id + "/title", title);
         ref.child("subjects").updateChildren(update);
     }
-    public void updateMark(String id, String subjId, String studId, int mark, String date){
+    public void updateMark(String id, String studId, String subjId, int mark, String date){
         HashMap<String, Object> update = new HashMap<>();
         update.put(id + "/subjId", subjId);
         update.put(id + "/studId", studId);

@@ -81,6 +81,7 @@ public class StudentsListActivity extends AppCompatActivity {
                 for(DataSnapshot gr: snapshot.getChildren()){
                     MatchesGroup group = gr.getValue(MatchesGroup.class);
                     mFirebaseConnector.groups.add(group);}
+                updateGroupTitle();
             }
 
             @Override
@@ -149,7 +150,6 @@ public class StudentsListActivity extends AppCompatActivity {
             case R.id.deleteStud:
                 MatchesStud delete = (MatchesStud) mListView.getItemAtPosition((int)info.id);
                 mFirebaseConnector.deleteStud(delete.getId());
-                updateStudList();
                 return true;
             case R.id.studSubjs:
                 Intent s = new Intent(mContext, StudentsMarksBySubj.class);
@@ -182,9 +182,11 @@ public class StudentsListActivity extends AppCompatActivity {
     private void updateStudList () {
         studAdapter.setArrayMyData(mFirebaseConnector.students);
         amount.setText("Студентов в группе: " + mFirebaseConnector.students.size());
+        studAdapter.notifyDataSetChanged();
+    }
+    private void updateGroupTitle() {
         MatchesGroup gr = mFirebaseConnector.getGroup(thisGroupId);
         group.setText(gr.getFaculty() + " факультет, группа №" + gr.getNumber());
-        studAdapter.notifyDataSetChanged();
     }
 
     class studListAdapter extends BaseAdapter {

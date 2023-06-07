@@ -93,7 +93,10 @@ public class AddMark extends AppCompatActivity {
             markItSelfInSubj.setSelection(spinnerData.indexOf(matches.getMark()));
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             LocalDate date = LocalDate.parse(matches.getDate(), formatter);
-            markDateInSubj.updateDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+            markDateInSubj.updateDate(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth());
+            MatchMarkID = matches.getId();
+            thisStudId = matches.getStudId();
+            thisSubjId = matches.getSubjId();
         }
         else
         {

@@ -133,6 +133,9 @@ public class StudentMarks extends AppCompatActivity {
                 Intent i = new Intent(mContext, AddMark.class);
                 MatchesMark md = (MatchesMark) mListView.getItemAtPosition((int)info.id);
                 i.putExtra("Matches", md);
+                i.putExtra("thisStudId", thisStudId);
+                i.putExtra("thisGroupId", thisGroupId);
+                i.putExtra("thisSubjId", thisSubjId);
                 startActivityForResult(i, REDACT_MARK_ACTIVITY);
                 updateMarksList();
                 return true;

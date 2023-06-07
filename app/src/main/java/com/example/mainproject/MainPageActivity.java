@@ -184,8 +184,9 @@ public class MainPageActivity extends AppCompatActivity {
                 return true;
             case R.id.deleteGroup:
                 MatchesStud ms = null;
+                MatchesGroup check = (MatchesGroup) mListView.getItemAtPosition((int)info.id);
                 for (MatchesStud stud: mFirebaseConnector.students) {
-                    if (mFirebaseConnector.groupsIds.contains(stud.getGroup_id())){
+                    if (check.getId().equals(stud.getGroup_id())){
                         ms = stud;
                         break;
                     }

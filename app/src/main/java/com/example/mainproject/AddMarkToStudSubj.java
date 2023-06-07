@@ -115,8 +115,10 @@ public class AddMarkToStudSubj extends AppCompatActivity {
                         break;
                     }
                 }
+                String day = String.valueOf(markDate.getDayOfMonth()).length() == 1 ? "0" + markDate.getDayOfMonth() : String.valueOf(markDate.getDayOfMonth());
+                String month = String.valueOf((markDate.getMonth() + 1)).length() == 1 ? "0" + (markDate.getMonth() + 1) : String.valueOf((markDate.getMonth() + 1));
                 MatchesMark matches = new MatchesMark(MatchMarkID, subjId, thisStudId,
-                        (int)markItSelf.getSelectedItem(), markDate.getDayOfMonth() + "." + (markDate.getMonth() + 1) + "." + markDate.getYear());
+                        (int)markItSelf.getSelectedItem(), day + "." + month + "." + markDate.getYear());
                 Intent intent = getIntent();
                 intent.putExtra("Matches",matches);
                 setResult(1, intent);

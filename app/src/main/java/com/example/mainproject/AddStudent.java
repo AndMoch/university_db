@@ -57,7 +57,7 @@ public class AddStudent extends AppCompatActivity {
             secondName.setText(matches.getSecond_name());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             LocalDate date = LocalDate.parse(matches.getBirthdate(), formatter);
-            birthdate.updateDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+            birthdate.updateDate(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth());
             MatchStudID = matches.getId();
         }
         else

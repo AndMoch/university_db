@@ -9,11 +9,14 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etLogEmail"/>
+        android:id="@+id/etLogEmail"
+        android:hint="Эл.почта"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etLogPassword"/>
+        android:inputType="textPassword"
+        android:id="@+id/etLogPassword"
+        android:hint="Пароль"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
