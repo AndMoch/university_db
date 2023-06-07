@@ -6,20 +6,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="БАЗА ДАННЫХ СТУДЕНТОВ УНИВЕРСИТЕТА"
-        android:layout_above="@id/btnRegistration"
+        android:layout_above="@id/btnLogin"
         android:textAlignment="center"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Зарегистрироваться"
-        android:id="@+id/btnRegistration"
-        android:layout_centerInParent="true"/>
-
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnRegistration"
         android:layout_centerInParent="true"
         android:text="Войти" />
+    <Button
+        android:id="@+id/btnSendRequestUniver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnSendRequestAccount"
+        android:layout_centerInParent="true"
+        android:text="Запрос на создание университета"/>
+    <Button
+        android:id="@+id/btnSendRequestAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnLogin"
+        android:layout_centerInParent="true"
+        android:text="Запрос на создание аккаунта"/>
 </RelativeLayout>

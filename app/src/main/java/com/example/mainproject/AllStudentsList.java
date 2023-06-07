@@ -35,6 +35,7 @@ public class AllStudentsList extends AppCompatActivity {
     FirebaseConnector mFirebaseConnector;
     Context mContext;
     ListView mListView;
+    TextView amount;
     allStudsListAdapter studAdapter;
 
     @Override
@@ -48,6 +49,7 @@ public class AllStudentsList extends AppCompatActivity {
         mListView.setAdapter(studAdapter);
         registerForContextMenu(mListView);
         Button btnAllGroups = findViewById(R.id.btnAllGroupsView);
+        amount = findViewById(R.id.allStudsAmount);
         btnAllGroups.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,6 +139,14 @@ public class AllStudentsList extends AppCompatActivity {
                 mFirebaseConnector.deleteStud(delete.getId());
                 updateStudList();
                 return true;
+            case R.id.studSubjsInALl:
+                Intent s = new Intent(mContext, StudentsMarksBySubj.class);
+                MatchesStud ms = (MatchesStud) mListView.getItemAtPosition((int)info.id);
+                s.putExtra("thisStudId", ms.getId());
+                s.putExtra("thisGroupId", ms.getGroup_id());
+                startActivity(s);
+                updateStudList();
+                return true;
             default:
                 return super.onContextItemSelected(item);
         }
@@ -157,6 +167,7 @@ public class AllStudentsList extends AppCompatActivity {
 
     private void updateStudList() {
         studAdapter.setArrayMyData(mFirebaseConnector.students);
+        amount.setText("Всего студентов: " + mFirebaseConnector.students.size());
         studAdapter.notifyDataSetChanged();
     }
     private void updateGroupList() {
@@ -217,8 +228,8 @@ public class AllStudentsList extends AppCompatActivity {
             }
             vName.setText(md.getName() + " ");
             vSurname.setText(md.getSurname() + " ");
-            vSecondName.setText(md.getSecond_name());
-            vBirthdate.setText(md.getBirthdate() + " ");
+            vSecondName.setText(md.getSecond_name() + "");
+            vBirthdate.setText("Дата рождения: " + md.getBirthdate() + "");
             vGroup.setText(mg.getFaculty() + " факультет, группа №" + mg.getNumber());
             return convertView;
         }

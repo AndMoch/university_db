@@ -36,6 +36,7 @@ public class StudentsListActivity extends AppCompatActivity {
     final String TAG = "Firebase";
     Context mContext;
     ListView mListView;
+    TextView amount, group;
     private String thisGroupId;
 
     FirebaseConnector mFirebaseConnector;
@@ -52,10 +53,21 @@ public class StudentsListActivity extends AppCompatActivity {
         mListView.setAdapter(studAdapter);
         registerForContextMenu(mListView);
         Button btnAllGroups = findViewById(R.id.btnAllGroupsViewFromStudOfGroup);
+        Button btnRating = findViewById(R.id.btnRating);
+        amount = findViewById(R.id.studsAmount);
+        group = findViewById(R.id.studsGroup);
         btnAllGroups.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        btnRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, RatingActivity.class);
+                i.putExtra("thisGroupId", thisGroupId);
+                startActivity(i);
             }
         });
     }
@@ -82,7 +94,8 @@ public class StudentsListActivity extends AppCompatActivity {
                 mFirebaseConnector.students.clear();
                 for(DataSnapshot stud: snapshot.getChildren()){
                     MatchesStud student = stud.getValue(MatchesStud.class);
-                    mFirebaseConnector.students.add(student);}
+                    if(student.getGroup_id().equals(thisGroupId))
+                        mFirebaseConnector.students.add(student);}
                 updateStudList();
             }
             @Override
@@ -138,6 +151,14 @@ public class StudentsListActivity extends AppCompatActivity {
                 mFirebaseConnector.deleteStud(delete.getId());
                 updateStudList();
                 return true;
+            case R.id.studSubjs:
+                Intent s = new Intent(mContext, StudentsMarksBySubj.class);
+                MatchesStud ms = (MatchesStud) mListView.getItemAtPosition((int)info.id);
+                s.putExtra("thisStudId", ms.getId());
+                s.putExtra("thisGroupId", ms.getGroup_id());
+                startActivity(s);
+                updateStudList();
+                return true;
             default:
                 return super.onContextItemSelected(item);
         }
@@ -159,13 +180,10 @@ public class StudentsListActivity extends AppCompatActivity {
     }
 
     private void updateStudList () {
-        ArrayList<MatchesStud> studs = new ArrayList<>();
-        for (MatchesStud stud: mFirebaseConnector.students){
-            if(stud.getGroup_id().equals(thisGroupId)){
-                studs.add(stud);
-            }
-        }
-        studAdapter.setArrayMyData(studs);
+        studAdapter.setArrayMyData(mFirebaseConnector.students);
+        amount.setText("Студентов в группе: " + mFirebaseConnector.students.size());
+        MatchesGroup gr = mFirebaseConnector.getGroup(thisGroupId);
+        group.setText(gr.getFaculty() + " факультет, группа №" + gr.getNumber());
         studAdapter.notifyDataSetChanged();
     }
 
@@ -218,9 +236,9 @@ public class StudentsListActivity extends AppCompatActivity {
 
             vName.setText(md.getName() + " ");
             vSurname.setText(md.getSurname() + " ");
-            vSecondName.setText(md.getSecond_name());
-            vBirthdate.setText(md.getBirthdate() + " ");
-            vGroup.setText(mg.getFaculty() + " факультет, группа " + " №" + mg.getNumber());
+            vSecondName.setText(md.getSecond_name() + " ");
+            vBirthdate.setText("Дата рождения: " + md.getBirthdate());
+            vGroup.setText("");
 
             return convertView;
         }

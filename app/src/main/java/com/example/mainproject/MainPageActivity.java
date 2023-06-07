@@ -29,11 +29,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class MainPageActivity extends AppCompatActivity {
     private static final int ADD_GROUP_ACTIVITY = 11;
     private static final int REDACT_GROUP_ACTIVITY = 12;
     final String TAG = "Firebase";
+    private String universityId;
 
     FirebaseConnector mFirebaseConnector;
     Context mContext;
@@ -48,12 +50,13 @@ public class MainPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_page);
         mContext = this;
         mFirebaseConnector = new FirebaseConnector();
-        mListView =  findViewById(R.id.groupList);
+        mListView = findViewById(R.id.groupList);
         groupAdapter = new groupListAdapter(mContext, mFirebaseConnector.groups);
         mListView.setAdapter(groupAdapter);
         registerForContextMenu(mListView);
         btnAllStuds = findViewById(R.id.btnAllStudsView);
         btnSignOut = findViewById(R.id.btnSignOut);
+
         btnAllStuds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +77,7 @@ public class MainPageActivity extends AppCompatActivity {
                 MatchesGroup md = (MatchesGroup) mListView.getItemAtPosition((int)id);
                 Intent intent = new Intent(mContext, StudentsListActivity.class);
                 intent.putExtra("thisGroupId", md.getId());
+                intent.putExtra("universityId", universityId);
                 startActivity(intent);
             }
         });
@@ -81,19 +85,17 @@ public class MainPageActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        mFirebaseConnector.groupsEndpoint.addValueEventListener(new ValueEventListener() {
+        mFirebaseConnector.usersEndpoint.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mFirebaseConnector.groups.clear();
-                for(DataSnapshot gr: snapshot.getChildren()){
-                    MatchesGroup group = gr.getValue(MatchesGroup.class);
-                    mFirebaseConnector.groups.add(group);
-                    mFirebaseConnector.groupsIds.add(group.getId());}
-                System.out.println(mFirebaseConnector.groups.toString());
-                updateGroupList();
-                updateGroupIdsList();
+                mFirebaseConnector.users.clear();
+                for(DataSnapshot us: snapshot.getChildren()){
+                    MatchesUser user = us.getValue(MatchesUser.class);
+                    if(user.getEmail().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())){
+                        mFirebaseConnector.users.add(user);
+                        universityId = user.getUniversityId();
+                        System.out.println(universityId);}}
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w(TAG, "loadGroup:onCancelled", error.toException());
@@ -114,6 +116,22 @@ public class MainPageActivity extends AppCompatActivity {
                 Log.w(TAG, "loadStud:onCancelled", error.toException());
             }
         });
+        mFirebaseConnector.groupsEndpoint.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mFirebaseConnector.groups.clear();
+                for(DataSnapshot gr: snapshot.getChildren()){
+                    MatchesGroup group = gr.getValue(MatchesGroup.class);
+                    mFirebaseConnector.groups.add(group);
+                    mFirebaseConnector.groupsIds.add(group.getId());}
+                updateGroupList();
+                updateGroupIdsList();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "loadGroup:onCancelled", error.toException());
+            }
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -126,6 +144,7 @@ public class MainPageActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.addGroup:
                 Intent i = new Intent(mContext, AddGroup.class);
+                i.putExtra("universityId", universityId);
                 startActivityForResult(i, ADD_GROUP_ACTIVITY);
                 updateGroupList();
                 return true;
@@ -178,6 +197,11 @@ public class MainPageActivity extends AppCompatActivity {
                 else
                     Toast.makeText(this, "В этой группе состоят студенты. Удалите их, прежде чем удалить группу.", Toast.LENGTH_LONG).show();
                 return true;
+            case R.id.groupSubjs:
+                Intent s = new Intent(mContext, SubjectsActivity.class);
+                MatchesGroup mg = (MatchesGroup) mListView.getItemAtPosition((int)info.id);
+                s.putExtra("thisGroupId", mg.getId());
+                startActivity(s);
             default:
                 return super.onContextItemSelected(item);
         }
@@ -203,8 +227,7 @@ public class MainPageActivity extends AppCompatActivity {
             if (requestCode == REDACT_GROUP_ACTIVITY)
                 mFirebaseConnector.updateGroup(md.getId(), md.getNumber(), md.getFaculty());
             else
-                mFirebaseConnector.writeNewGroup(md.getId(), md.getNumber(), md.getFaculty());
-            System.out.println(mFirebaseConnector.groups.toString());
+                mFirebaseConnector.writeNewGroup(md.getId(), md.getNumber(), md.getFaculty(), md.getUniversityId());
             updateGroupList();
         }
     }
@@ -250,7 +273,6 @@ public class MainPageActivity extends AppCompatActivity {
             }
             return 0;
         }
-
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null)
                 convertView = mLayoutInflater.inflate(R.layout.item_group, null);

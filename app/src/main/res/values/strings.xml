@@ -4,7 +4,7 @@
     <string name="name">Имя</string>
     <string name="surname">Фамилия</string>
     <string name="second_name">Отчество</string>
-    <string name="birthdate">Дата рождения (В формате ДД.ММ.ГГГГ)</string>
+    <string name="birthdate">Дата рождения</string>
     <string name="group_num">Номер группы</string>
     <string name="group">Группа</string>
     <string name="faculty">Название факультета</string>

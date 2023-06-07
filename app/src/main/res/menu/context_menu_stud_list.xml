@@ -5,4 +5,6 @@
         android:title="@string/edit" />
     <item android:id="@+id/deleteStud"
         android:title="@string/delete" />
+    <item android:id="@+id/studSubjs"
+        android:title="Оценки" />
 </menu>

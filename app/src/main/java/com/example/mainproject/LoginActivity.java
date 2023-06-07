@@ -16,11 +16,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     EditText etEmail, etPassword;
     Button btnReg, btnLog;
     FirebaseAuth auth;
+    FirebaseConnector mFirebaseConnector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,22 +35,31 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etLogPassword);
         btnLog = findViewById(R.id.btnSignIn);
         btnReg = findViewById(R.id.btnMoveToReg);
+        mFirebaseConnector = new FirebaseConnector();
+        mFirebaseConnector.usersEndpoint.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot us: snapshot.getChildren()){
+                    MatchesUser user = us.getValue(MatchesUser.class);
+                    mFirebaseConnector.users.add(user);}
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         btnLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Введите адрес электронной почты!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (password.length() < 8) {
-                    Toast.makeText(getApplicationContext(), "Password too short, enter minimum 8 characters!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Введите пароль!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -59,7 +72,13 @@ public class LoginActivity extends AppCompatActivity {
                             Log.e("LogTag", task.getException().toString());
 
                         } else {
-                            startActivity(new Intent(LoginActivity.this, MainPageActivity.class));
+                            if (email.equals("andmochgeek@ya.ru")){
+                                Intent c = new Intent(LoginActivity.this, CreatorActivity.class);
+                                startActivity(c);}
+                            else{
+                                Intent m = new Intent(LoginActivity.this, MainPageActivity.class);
+                                m.putExtra("universityId", mFirebaseConnector.getUserByEmail(email).getUniversityId());
+                                startActivity(m);}
                             finish();
                         }
                     }

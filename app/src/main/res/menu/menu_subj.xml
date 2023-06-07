@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.op.simpledb.MainActivity">
+    <item android:id="@+id/addSubj"
+        android:title="Добавить предмет"
+        android:icon="@android:drawable/ic_menu_add"/>
+    <item android:id="@+id/deleteAllSubjs"
+        android:title="Удалить все предметы"
+        android:icon="@android:drawable/ic_menu_delete"/>
+</menu>

@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/markAddButtons"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+        <Button
+            android:id="@+id/btnMarkToSubjAddSave"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/save"
+            />
+
+        <Button
+            android:id="@+id/btnMarkToSubjAddCancel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_above="@id/markAddButtons"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <TextView
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="Оценка" />
+            <Spinner
+                android:id="@+id/markItSelfInSubj"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="123dp"
+                android:layout_height="wrap_content"
+                android:text="Дата" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"></TextView>
+
+                <DatePicker
+                    android:id="@+id/markDateInSubj"
+                    android:layout_width="325dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" />
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"></TextView></LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

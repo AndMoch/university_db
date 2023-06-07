@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/marksForSubj"
+        android:title="Перейти к оценкам по предмету" />
+    <item android:id="@+id/deleteAllMarksForSubj"
+        android:title="Удалить все оценки по предмету" />
+</menu>

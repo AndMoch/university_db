@@ -1,6 +1,8 @@
 package com.example.mainproject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -12,11 +14,7 @@ public class MatchesStud implements Serializable {
     private String birthdate;
     private String group_id;
 
-    private String unicersityId;
-
-    private Map<String, int[]> marks;
     public MatchesStud(){
-
     }
 
     public MatchesStud (String id, String name, String surname, String second_name, String birthdate, String group_id) {
@@ -51,4 +49,5 @@ public class MatchesStud implements Serializable {
     public String getGroup_id() {
         return group_id;
     }
+
 }

@@ -7,16 +7,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Scanner;
 import java.util.UUID;
 
 public class AddStudentToGroup extends AppCompatActivity {
     Button btnAddGroupStudent, btnCancelAddingGroupStudent;
-    EditText name, surname, secondName, birthdate;
+    EditText name, surname, secondName;
+    DatePicker birthdate;
     Context mContext;
     final String TAG = "Firebase";
     FirebaseConnector dbConnect;
@@ -40,10 +43,24 @@ public class AddStudentToGroup extends AppCompatActivity {
         MatchStudID = UUID.randomUUID().toString();
         while (dbConnect.getStud(MatchStudID) != null){
             MatchStudID = UUID.randomUUID().toString();}
+        Calendar today = Calendar.getInstance();
+        birthdate.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+            }
+        });
         btnAddGroupStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MatchesStud matches = new MatchesStud(MatchStudID, name.getText().toString(), surname.getText().toString(), secondName.getText().toString(), birthdate.getText().toString(), groupId);
+                String day = String.valueOf(birthdate.getDayOfMonth()).length() == 1 ? "0" +
+                        birthdate.getDayOfMonth() : String.valueOf(birthdate.getDayOfMonth());
+                String month = String.valueOf((birthdate.getMonth() + 1)).length() == 1 ? "0" +
+                        (birthdate.getMonth() + 1) : String.valueOf((birthdate.getMonth() + 1));
+
+                MatchesStud matches = new MatchesStud(MatchStudID, name.getText().toString(),
+                        surname.getText().toString(), secondName.getText().toString(),
+                        day + "." + month + "." + birthdate.getYear(), groupId);
                 Intent intent = getIntent();
                 intent.putExtra("Matches", matches);
                 setResult(1, intent);

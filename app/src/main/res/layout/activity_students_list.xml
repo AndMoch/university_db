@@ -11,8 +11,25 @@
             android:layout_height="wrap_content"
             android:text="Все группы"
             android:id="@+id/btnAllGroupsViewFromStudOfGroup"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Рейтинг студентов"
+            android:id="@+id/btnRating"/>
     </LinearLayout>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/studsGroup"
+        android:textSize="24sp"
+        android:textAlignment="center"
+        android:layout_gravity="center">
+    </TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/studsAmount">
+    </TextView>
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

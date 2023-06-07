@@ -65,15 +65,26 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text" />
-            <TextView
-                android:layout_width="120dp"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/birthdate" />
-            <EditText
-                android:id="@+id/studGroupBirthdate"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"></TextView>
+
+                <DatePicker
+                    android:id="@+id/studGroupBirthdate"
+                    android:layout_width="325dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" />
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"></TextView>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

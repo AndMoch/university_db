@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -17,13 +18,17 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Scanner;
 import java.util.UUID;
 
 public class AddStudent extends AppCompatActivity {
     Button btnAddStudent, btnCancelAddingStudent;
-    EditText name, surname, secondName, birthdate;
+    EditText name, surname, secondName;
+    DatePicker birthdate;
     Context mContext;
     final String TAG = "Firebase";
     FirebaseConnector dbConnect;
@@ -50,7 +55,9 @@ public class AddStudent extends AppCompatActivity {
             name.setText(matches.getName());
             surname.setText(matches.getSurname());
             secondName.setText(matches.getSecond_name());
-            birthdate.setText(matches.getBirthdate());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            LocalDate date = LocalDate.parse(matches.getBirthdate(), formatter);
+            birthdate.updateDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
             MatchStudID = matches.getId();
         }
         else
@@ -58,7 +65,14 @@ public class AddStudent extends AppCompatActivity {
             MatchStudID = UUID.randomUUID().toString();
             while (dbConnect.getStud(MatchStudID) != null)
                 MatchStudID = UUID.randomUUID().toString();
-    }
+            Calendar today = Calendar.getInstance();
+            birthdate.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
+                @Override
+                public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                }
+            });
+        }
         btnAddStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +88,13 @@ public class AddStudent extends AppCompatActivity {
                         intentGroup = group;
                     }
                 }
-                MatchesStud matches = new MatchesStud(MatchStudID, name.getText().toString(), surname.getText().toString(), secondName.getText().toString(), birthdate.getText().toString(), intentGroup.getId());
+                String day = String.valueOf(birthdate.getDayOfMonth()).length() == 1 ? "0" +
+                        birthdate.getDayOfMonth() : String.valueOf(birthdate.getDayOfMonth());
+                String month = String.valueOf((birthdate.getMonth() + 1)).length() == 1 ? "0" +
+                        (birthdate.getMonth() + 1) : String.valueOf((birthdate.getMonth() + 1));
+                MatchesStud matches = new MatchesStud(MatchStudID, name.getText().toString(), surname.getText().toString(), secondName.getText().toString(),
+                        day + "." + month + "." + birthdate.getYear(),
+                        intentGroup.getId());
                 Intent intent = getIntent();
                 intent.putExtra("Matches", matches);
                 setResult(1, intent);

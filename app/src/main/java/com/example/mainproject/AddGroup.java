@@ -26,6 +26,7 @@ public class AddGroup extends AppCompatActivity {
     final String TAG = "Firebase";
     private Context context;
     private String MatchGroupID;
+    private String thisUniversityId;
 
 
     FirebaseConnector dbConnect;
@@ -38,6 +39,7 @@ public class AddGroup extends AppCompatActivity {
         btnCancelAddingGroup = findViewById(R.id.btnGroupAddCancel);
         groupFaculty = findViewById(R.id.groupFaculty);
         groupNumber = findViewById(R.id.groupNumber);
+        thisUniversityId = getIntent().getStringExtra("universityId");
         dbConnect = new FirebaseConnector();
         if(getIntent().hasExtra("Matches")){
             MatchesGroup matches=(MatchesGroup)getIntent().getSerializableExtra("Matches");
@@ -45,6 +47,7 @@ public class AddGroup extends AppCompatActivity {
             groupNumber.setText(String.valueOf(matches.getNumber()));
             groupFaculty.setText(matches.getFaculty());
             MatchGroupID = matches.getId();
+            thisUniversityId = matches.getUniversityId();
         }
         else
         {
@@ -65,11 +68,11 @@ public class AddGroup extends AppCompatActivity {
 
                 }
                 if (mg == null){
-                MatchesGroup matches = new MatchesGroup(MatchGroupID, Integer.parseInt(groupNumber.getText().toString()), groupFaculty.getText().toString());
-                Intent intent=getIntent();
-                intent.putExtra("Matches",matches);
-                setResult(1, intent);
-                finish();}
+                    MatchesGroup matches = new MatchesGroup(MatchGroupID, Integer.parseInt(groupNumber.getText().toString()), groupFaculty.getText().toString(), thisUniversityId);
+                    Intent intent=getIntent();
+                    intent.putExtra("Matches",matches);
+                    setResult(1, intent);
+                    finish();}
                 else
                     Toast.makeText(context, "Такая группа уже существует", Toast.LENGTH_LONG).show();
             }
@@ -102,5 +105,4 @@ public class AddGroup extends AppCompatActivity {
             }
         });
     }
-
 }

@@ -12,11 +12,14 @@
             android:text="Все группы"
             android:id="@+id/btnAllGroupsView"/>
     </LinearLayout>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/allStudsAmount">
+    </TextView>
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/allStudsList"
         />
-
 </LinearLayout>

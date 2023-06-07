@@ -7,16 +7,16 @@ public class MatchesGroup implements Serializable {
     private String id;
     private String faculty;
     private int number;
-
-    private String universityId;
+    String universityId;
 
     public MatchesGroup(){
     }
 
-    public MatchesGroup (String id, int number, String faculty) {
+    public MatchesGroup (String id, int number, String faculty, String universityId) {
         this.id = id;
         this.number = number;
-        this.faculty=faculty;
+        this.faculty = faculty;
+        this.universityId = universityId;
     }
 
     public String getId() {
@@ -29,5 +29,9 @@ public class MatchesGroup implements Serializable {
 
     public int getNumber() {
         return number;
+    }
+
+    public String getUniversityId() {
+        return universityId;
     }
 }

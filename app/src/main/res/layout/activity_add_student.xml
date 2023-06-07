@@ -40,7 +40,9 @@
                     <TextView
                         android:layout_width="125dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/name" />
+                        android:text="@string/name"
+                        android:textAlignment="center"
+                        android:layout_gravity="center_horizontal" />
                     <EditText
                         android:id="@+id/studName"
                         android:layout_width="fill_parent"
@@ -49,7 +51,8 @@
                     <TextView
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/surname" />
+                        android:text="@string/surname" android:textAlignment="center"
+                        android:layout_gravity="center_horizontal"/>
                     <EditText
                         android:id="@+id/studSurname"
                         android:layout_width="fill_parent"
@@ -59,29 +62,49 @@
                     <TextView
                         android:layout_width="123dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/second_name" />
+                        android:text="@string/second_name" android:textAlignment="center"
+                        android:layout_gravity="center_horizontal"/>
                     <EditText
                         android:id="@+id/studSecondName"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="@string/group"
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal"/>
+            <Spinner
+                android:id="@+id/studGroup"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"/>
                     <TextView
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/birthdate" />
-                    <EditText
-                        android:id="@+id/studBirthdate"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"/>
+                        android:text="@string/birthdate"
+                        android:textAlignment="center"
+                        android:layout_gravity="center_horizontal"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
                 <TextView
-                    android:layout_width="120dp"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"></TextView>
+
+                <DatePicker
+                    android:id="@+id/studBirthdate"
+                    android:layout_width="325dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/group" />
-                <Spinner
-                    android:id="@+id/studGroup"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_gravity="center_horizontal" />
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"></TextView>
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

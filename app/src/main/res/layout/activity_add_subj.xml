@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/groupAddButtons"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+        <Button
+            android:id="@+id/btnSubjAddSave"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/save"
+            />
+
+        <Button
+            android:id="@+id/btnSubjAddCancel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_above="@id/groupAddButtons"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <TextView
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="Название предмета" />
+            <EditText
+                android:id="@+id/subjTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
