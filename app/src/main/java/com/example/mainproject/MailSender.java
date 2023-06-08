@@ -12,7 +12,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class MailSender extends javax.mail.Authenticator {
-    private String mailhost = "smtp.gmail.com"; //Hostname of the SMTP mail server which you want to connect for sending emails.
+    private String mailhost = "smtp.gmail.com";
     private String user;
     private String password;
     private Session session;
@@ -22,8 +22,8 @@ public class MailSender extends javax.mail.Authenticator {
     }
 
     public MailSender(String user, String password) {
-        this.user = user; //Your SMTP username. In case of GMail SMTP this is going to be your GMail email address.
-        this.password = password; //Your SMTP password. In case of GMail SMTP this is going to be your GMail password.
+        this.user = user;
+        this.password = password;
 
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");

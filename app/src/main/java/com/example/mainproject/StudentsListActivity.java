@@ -21,6 +21,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -65,9 +66,13 @@ public class StudentsListActivity extends AppCompatActivity {
         btnRating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mFirebaseConnector.subjs.size() != 0){
                 Intent i = new Intent(mContext, RatingActivity.class);
                 i.putExtra("thisGroupId", thisGroupId);
-                startActivity(i);
+                startActivity(i);}
+                else {
+                    Toast.makeText(mContext, "В этой группе нет предметов", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

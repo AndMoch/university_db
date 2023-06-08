@@ -154,11 +154,11 @@ public class StudentMarks extends AppCompatActivity {
         if (resultCode == 1) {
             if(requestCode == ADD_MARK_ACTIVITY){
                 MatchesMark mm = (MatchesMark) data.getExtras().getSerializable("Matches");
-                mFirebaseConnector.writeNewMark(mm.getId(), mm.getStudId(), mm.getSubjId(), mm.getMark(), mm.getDate());
+                mFirebaseConnector.writeNewMark(mm.getId(), mm.getSubjId(), mm.getStudId(), mm.getMark(), mm.getDate());
                 updateMarksList();}
             else if(requestCode == REDACT_MARK_ACTIVITY){
                 MatchesMark mm = (MatchesMark) data.getExtras().getSerializable("Matches");
-                mFirebaseConnector.updateMark(mm.getId(), mm.getStudId(), mm.getSubjId(), mm.getMark(), mm.getDate());
+                mFirebaseConnector.updateMark(mm.getId(), mm.getSubjId(), mm.getStudId(), mm.getMark(), mm.getDate());
                 updateMarksList();
             }
         }
